@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_views/core/widgets/edit_text.dart';
 import 'package:flutter_views/features/presentations/home/home_page.dart';
-import 'package:validators/validators.dart';
 
 class EditTextPage extends StatefulWidget {
   const EditTextPage({Key? key}) : super(key: key);
@@ -68,79 +68,22 @@ class _EditTextPageState extends State<EditTextPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              _editBox(),
+              EditText(
+                controller: controller,
+                inputType: InputType.number,
+                onEvent: (event) {
+                  isValid = event.isValid;
+                  print('\n\n');
+                  print(event.isValid);
+                  print(event.value);
+                  setState(() {});
+                },
+              ),
               const SizedBox(height: 30),
               _loginButton(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  _editBox() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        controller: controller,
-        onChanged: (value) {
-          setState(() {
-            isValid = isEmail(value);
-          });
-        },
-        showCursor: true,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-        decoration: _decoration(),
-      ),
-    );
-  }
-
-  _decoration() {
-    return InputDecoration(
-      labelText: "Email",
-      labelStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-        fontWeight: FontWeight.w300,
-      ),
-      hintText: "something@email.com",
-      hintStyle: const TextStyle(
-        color: Colors.grey,
-        fontSize: 15,
-      ),
-      prefixIcon: const Icon(
-        Icons.email_outlined,
-        color: Colors.white,
-      ),
-      suffixIcon: !isValid
-          ? const Icon(
-              Icons.close_sharp,
-              color: Colors.red,
-            )
-          : const Icon(
-              Icons.done,
-              color: Colors.green,
-            ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.grey.shade200,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: !isValid ? Colors.red : Colors.green,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      floatingLabelStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 18,
-        fontWeight: FontWeight.w300,
       ),
     );
   }
